@@ -2,6 +2,8 @@ package controllers;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import database.Round;
+import database.RoundProvider;
 import filters.SecureFilter;
 import ninja.Context;
 import ninja.FilterWith;
@@ -24,19 +26,19 @@ public class GameController {
     @Inject
     private IPokerService pokerService;
 
+    @Inject
+    RoundProvider roundProvider;
+
     @FilterWith(SecureFilter.class)
     public Result game(Context context) {
         Result result = Results.html();
 
-        List<String> users = new LinkedList<>();
-
-        for(int i = 0; i < 6; i++)
-        {
-            users.add("user"+(i+1));
-        }
-
-        result.render("users", users);
+        //Create Round
         Hand hands[] = pokerService.generateHands();
+
+        //store in db
+        Round round = new Round();
+        roundProvider.persist(round);
 
         List<Card> cards = new LinkedList<>();
         List<String> evaluate = new LinkedList<>();
@@ -49,6 +51,17 @@ public class GameController {
             evaluate.add(HandEvaluator.getHandString(hands[h]));
         }
 
+        List<String> users = new LinkedList<>();
+
+        //TODO Actual Users
+        for (int i = 0; i < 6; i++) {
+            users.add("user" + (i + 1));
+        }
+
+        String username = context.getParameter("Username");
+
+
+        result.render("users", users);
         result.render("cards", cards);
         result.render("evaluate", evaluate);
 

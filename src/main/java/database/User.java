@@ -1,9 +1,8 @@
 package database;
 
-import org.apache.commons.codec.binary.Base64;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -13,7 +12,8 @@ import javax.validation.constraints.Size;
 public class User {
 
     @Id
-    @Size (max = 12)
+    @Size(max = 255)
+    @NotNull
     private String username;
 
     private String password;
