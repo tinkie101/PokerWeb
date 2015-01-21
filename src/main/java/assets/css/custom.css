@@ -1,0 +1,115 @@
+/* Add additional stylesheets below
+-------------------------------------------------- */
+h1,#user{
+    color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+body
+{
+    background-image: url(/assets/images/2.jpg);
+    width:100%;
+    height:100%;
+}
+
+.gameDiv
+{
+    min-width:200px;
+    border: 2px solid;
+    border-radius: 25px;
+    background-color: rgba(225, 0, 0, 0.5);
+    width:50%;
+    min-height:350px;
+    margin:auto;
+}
+
+.card1
+{
+    position: relative;
+    -webkit-animation: mymove 1.5s;  /* Chrome, Safari, Opera */
+    -webkit-animation-iteration-count: 1;  /* Chrome, Safari, Opera */
+    -webkit-animation-fill-mode: forwards;  /* Chrome, Safari, Opera */
+    animation: mymove 1.5s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+.card2
+{
+    position: relative;
+    -webkit-animation: mymove 2s;  /* Chrome, Safari, Opera */
+    -webkit-animation-iteration-count: 1;  /* Chrome, Safari, Opera */
+    -webkit-animation-fill-mode: forwards;  /* Chrome, Safari, Opera */
+    animation: mymove 2s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+.card3
+{
+    position: relative;
+    -webkit-animation: mymove 2.5s;  /* Chrome, Safari, Opera */
+    -webkit-animation-iteration-count: 1;  /* Chrome, Safari, Opera */
+    -webkit-animation-fill-mode: forwards;  /* Chrome, Safari, Opera */
+    animation: mymove 2.5s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+.card4
+{
+    position: relative;
+    -webkit-animation: mymove 3s;  /* Chrome, Safari, Opera */
+    -webkit-animation-iteration-count: 1;  /* Chrome, Safari, Opera */
+    -webkit-animation-fill-mode: forwards;  /* Chrome, Safari, Opera */
+    animation: mymove 3s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+.card5
+{
+    position: relative;
+    -webkit-animation: mymove 3.5s;  /* Chrome, Safari, Opera */
+    -webkit-animation-iteration-count: 1;  /* Chrome, Safari, Opera */
+    -webkit-animation-fill-mode: forwards;  /* Chrome, Safari, Opera */
+    animation: mymove 3.5s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+.EvaluateHeader
+{
+    position: relative;
+    -webkit-animation: mymove2 4s;  /* Chrome, Safari, Opera */
+    -webkit-animation-iteration-count: 1;  /* Chrome, Safari, Opera */
+    -webkit-animation-fill-mode: forwards;  /* Chrome, Safari, Opera */
+    animation: mymove2 4s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes mymove {
+    from {left: 999px;}
+    to {left: 0px;}
+}
+
+@keyframes mymove {
+    from {left: 999px;}
+    to {left: 0px;}
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes mymove2 {
+    from {color: rgba(0, 0, 0, 0.0);
+            font-size:0px;}
+    to {color: rgba(225, 215, 0, 1.0);
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;}
+}
+
+@keyframes mymove2 {
+    from {color: rgba(0, 0, 0, 0.0);
+    font-size:0px;}
+    to {color: rgba(225, 215, 0, 1.0);
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;}
