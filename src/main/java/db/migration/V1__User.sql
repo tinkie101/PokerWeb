@@ -10,13 +10,13 @@ CREATE TABLE Round(
     PRIMARY KEY (roundID)
 );
 
-CREATE TABLE Games(
+CREATE TABLE Game(
     gameID int NOT NULL AUTO_INCREMENT,
     hand VARCHAR(16) NOT NULL,
     evaluate VARCHAR(255) NOT NULL,
     username VARCHAR(255) NOT NULL,
-    round int NOT NULL,
+    roundID int NOT NULL,
     PRIMARY KEY (gameID),
     CONSTRAINT fk_user FOREIGN KEY (username) REFERENCES User(username),
-    CONSTRAINT fk_round FOREIGN KEY (round) REFERENCES Round(roundID)
+    CONSTRAINT fk_round FOREIGN KEY (roundID) REFERENCES Round(roundID)
 );

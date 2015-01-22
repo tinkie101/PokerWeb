@@ -17,16 +17,11 @@
 package controllers;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import ninja.Context;
 import ninja.Result;
 import ninja.Results;
-
-import com.google.inject.Singleton;
 import ninja.Router;
-import poker.cards.Hand;
-import poker.generator.Generator;
-import services.IPokerService;
-import services.PokerService;
 
 
 @Singleton
@@ -40,8 +35,7 @@ public class ApplicationController {
     public Result index(Context context)
     {
         if (context.getSession() != null && context.getSession().get(USERNAME) != null) {
-
-            return Results.redirect(router.getReverseRoute(GameController.class, "game"));
+            return Results.redirect(router.getReverseRoute(GameController.class, "selectUsers"));
         }
 
         Result result = Results.html();

@@ -2,7 +2,7 @@ package database;
 
 import ninja.jpa.UnitOfWork;
 
-import javax.persistence.Query;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -13,6 +13,11 @@ public class UserProvider extends BaseRepository {
     @UnitOfWork    //@transaction is for writes
     public Optional<User> findUserByName(String name){
         return getSingleResult(getEntityManager().createQuery("SELECT u FROM User u WHERE u.username = :name").setParameter("name", name));
+    }
+
+    @UnitOfWork    //@transaction is for writes
+    public List<User> getAllUsers() {
+        return getEntityManager().createQuery("SELECT u FROM User u").getResultList();
     }
 
     public boolean exists(String name)

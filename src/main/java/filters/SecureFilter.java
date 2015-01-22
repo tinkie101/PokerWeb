@@ -18,9 +18,7 @@ public class SecureFilter implements Filter {
 
     @Override
     public Result filter(FilterChain chain, Context context) {
-
         if (context.getSession() == null || context.getSession().get(USERNAME) == null) {
-
             context.getFlashScope().error("Invalid Login Credentials!");
             return Results.redirect(router.getReverseRoute(ApplicationController.class, "index"));
 

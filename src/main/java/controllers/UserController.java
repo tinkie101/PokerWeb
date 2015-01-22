@@ -58,7 +58,7 @@ public class UserController {
                 context.getSession().put(USERNAME, context.getParameter("Username"));
         }
 
-        return Results.redirect(router.getReverseRoute(GameController.class, "game"));
+        return Results.redirect(router.getReverseRoute(GameController.class, "selectUsers"));
     }
 
     public Result logout(Context context)

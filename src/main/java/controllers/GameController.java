@@ -2,8 +2,7 @@ package controllers;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import database.Round;
-import database.RoundProvider;
+import database.*;
 import filters.SecureFilter;
 import ninja.Context;
 import ninja.FilterWith;
@@ -27,7 +26,13 @@ public class GameController {
     private IPokerService pokerService;
 
     @Inject
+    UserProvider userProvider;
+
+    @Inject
     RoundProvider roundProvider;
+
+    @Inject
+    GameProvider gameProvider;
 
     @FilterWith(SecureFilter.class)
     public Result game(Context context) {
@@ -48,7 +53,15 @@ public class GameController {
                 cards.add(card);
             }
 
-            evaluate.add(HandEvaluator.getHandString(hands[h]));
+            String evaluateString = HandEvaluator.getHandString(hands[h]);
+            evaluate.add(evaluateString);
+
+            String username = context.getSession().get("username");
+
+            User user = userProvider.findUserByName(username).get();
+
+            Game game = new Game(hands[h].toString(), evaluateString, user, round);
+            gameProvider.persist(game);
         }
 
         List<String> users = new LinkedList<>();
@@ -58,20 +71,29 @@ public class GameController {
             users.add("user" + (i + 1));
         }
 
-        String username = context.getParameter("Username");
-
-
         result.render("users", users);
         result.render("cards", cards);
         result.render("evaluate", evaluate);
 
         return result;
-
-        //return Results.html();
     }
 
-    public void setPokerService(IPokerService pokerService)
-    {
-        this.pokerService = pokerService;
+    @FilterWith(SecureFilter.class)
+    public Result selectUsers(Context context) {
+        Result result = Results.html();
+
+        List<User> users = userProvider.getAllUsers();
+        List<String> usernames = new LinkedList<>();
+
+        for (User user : users)
+            usernames.add(user.getUsername());
+
+
+        String superUser = context.getSession().get("username");
+
+        result.render("superUser", superUser);
+        result.render("usernames", usernames);
+
+        return result;
     }
 }

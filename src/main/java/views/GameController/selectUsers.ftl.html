@@ -1,0 +1,40 @@
+<#import "../layout/defaultLayout.ftl.html" as layout/>
+<@layout.myLayout "Game Page">
+
+<select class="form-control">
+    <option id=user1 value=${superUser}>${superUser}</option>
+</select>
+
+<select class="form-control">
+    <#list usernames as name>
+        <option id=user2 value=${name}>${name}</option>
+    </#list>
+</select>
+
+<select class="form-control">
+    <#list usernames as name>
+        <option id=user3 value=${name}>${name}</option>
+    </#list>
+</select>
+
+<select class="form-control">
+    <#list usernames as name>
+        <option id=user4 value=${name}>${name}</option>
+    </#list>
+</select>
+
+<select class="form-control">
+    <#list usernames as name>
+        <option id=user5 value=${name}>${name}</option>
+    </#list>
+</select>
+
+<select class="form-control">
+    <#list usernames as name>
+        <option id=user6 value=${name}>${name}</option>
+    </#list>
+</select>
+
+<button class="btn btn-primary" onclick="window.location.href='/game'" type="button">Play!</button>
+
+</@layout.myLayout>

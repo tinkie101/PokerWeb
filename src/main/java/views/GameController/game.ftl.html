@@ -1,8 +1,8 @@
 <#import "../layout/defaultLayout.ftl.html" as layout/>
 <@layout.myLayout "Game Page">
 
-    <#assign userCount=0>
-    <#assign cardCount = 0>
+<#assign userCount=0/>
+<#assign cardCount = 0/>
 
     <#list users as user>
         <div class="gameDiv" align="center">
@@ -10,25 +10,25 @@
                 <h1 id='user1'>User: ${user}</h1>
 
                 <img src='assets/images/cards/${cards[cardCount]}.png' class='card1' alt=${cards[cardCount]} style='width:75px;height:100px'>
-                <#assign cardCount = cardCount +1>
+                <#assign cardCount = cardCount +1/>
 
                 <img src='assets/images/cards/${cards[cardCount]}.png' class='card2' alt=${cards[cardCount]} style='width:75px;height:100px'>
-                <#assign cardCount = cardCount +1>
+                <#assign cardCount = cardCount +1/>
 
                 <img src='assets/images/cards/${cards[cardCount]}.png' class='card3' alt=${cards[cardCount]} style='width:75px;height:100px'>
-                <#assign cardCount = cardCount +1>
+                <#assign cardCount = cardCount +1/>
 
                 <img src='assets/images/cards/${cards[cardCount]}.png' class='card4' alt=${cards[cardCount]} style='width:75px;height:100px'>
-                <#assign cardCount = cardCount +1>
+                <#assign cardCount = cardCount +1/>
 
                 <img src='assets/images/cards/${cards[cardCount]}.png' class='card5' alt=${cards[cardCount]} style='width:75px;height:100px'>
-                <#assign cardCount = cardCount +1>
+                <#assign cardCount = cardCount +1/>
 
 
                 <h2 class='EvaluateHeader'>Evaluate: <b>${evaluate[userCount]}</b></h2>
             </div>
         </div>
-        <#assign userCount = userCount + 1>
+        <#assign userCount = userCount + 1/>
     </#list>
 
     <button class="btn btn-danger" onclick="window.location.href='/logout'" type="button">Logout</button>
