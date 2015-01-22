@@ -14,8 +14,10 @@ body
 
 .info
 {
-    margin:auto;
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    color:black;
+    font-weight:bold;
+    font-size:20px;
+    padding:10px;
 }
 
 .gameDiv
@@ -29,6 +31,17 @@ body
     margin:auto;
     margin-top:5px;
     margin-bottom:5px;
+}
+
+#historyDiv
+{
+    width:100%;
+    margin-top:10px;
+    margin-bottom:10px;
+    border: 2px solid;
+    border-radius: 15px;
+    background-color: rgba(100, 200, 255, 0.5);
+    padding:5px;
 }
 
 .selectDiv

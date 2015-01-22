@@ -18,10 +18,13 @@ package controllers;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import database.*;
 import ninja.Context;
 import ninja.Result;
 import ninja.Results;
 import ninja.Router;
+
+import java.util.*;
 
 
 @Singleton
@@ -32,6 +35,12 @@ public class ApplicationController {
     @Inject
     Router router;
 
+    @Inject
+    GameProvider gameProvider;
+
+    @Inject
+    RoundProvider roundProvider;
+
     public Result index(Context context)
     {
         if (context.getSession() != null && context.getSession().get(USERNAME) != null) {
@@ -39,6 +48,39 @@ public class ApplicationController {
         }
 
         Result result = Results.html();
+        return result;
+    }
+
+
+    public Result history(Context context)
+    {
+        if (context.getSession() != null && context.getSession().get(USERNAME) != null) {
+            context.getFlashScope().success("Logged In");
+        }
+
+        Result result = Results.html();
+
+        String username = context.getSession().get("username");
+
+        List<Round> rounds = roundProvider.findAllRounds();
+
+        Collections.sort(rounds, new Comparator<Round>() {
+            @Override
+            public int compare(Round o1, Round o2) {
+                return o2.getDate().compareTo(o1.getDate());
+            }
+        });
+
+            List<List<Game>> games= new LinkedList<>();
+
+
+        for(Round round: rounds)
+        {
+            games.add(gameProvider.findGamesByRoundID(round.getID()));
+        }
+
+        result.render("games", games);
+
         return result;
     }
 

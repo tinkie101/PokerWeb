@@ -12,13 +12,16 @@
 		<#if (flash.success)??>
 
 			<#if flash.success == "Logged In">
-				<a class="navbar-brand" href="/history">Game History</a>
+				<a class="navbar-brand" href="/singleHistory">User History</a>
 				<button style="padding:5px; float:right; margin:7px;" class="btn btn-danger" onclick="window.location.href='/logout'" type="button">Logout</button>
 			</#if>
 
 			<label style="padding:5px; float:right; margin:7px;" class="alert alert-success">${flash.success}</label>
-
 		</#if>
+
+		<a class="navbar-brand" href="/history">Complete History</a>
+
+
 		<!--/.navbar-collapse -->
 	</div>
 </div>

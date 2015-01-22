@@ -92,24 +92,24 @@ public class GameController {
     }
 
     @FilterWith(SecureFilter.class)
-    public Result history(Context context) {
+    public Result singleHistory(Context context) {
         Result result = Results.html();
 
         String username = context.getSession().get("username");
         List<Game> games = gameProvider.findGamesByUsername(username);
-        List<History> histories = new LinkedList<>();
+        List<SingleHistory> histories = new LinkedList<>();
 
         for(Game game : games)
         {
             Optional<Round> round = roundProvider.findRoundByID(game.getRoundID());
 
             if(round.isPresent())
-                histories.add(new History(game.getHand(), game.getEvaluate(), round.get().getDate()));
+                histories.add(new SingleHistory(game.getHand(), game.getEvaluate(), round.get().getDate()));
         }
 
-        Collections.sort(histories, new Comparator<History>() {
+        Collections.sort(histories, new Comparator<SingleHistory>() {
             @Override
-            public int compare(History o1, History o2) {
+            public int compare(SingleHistory o1, SingleHistory o2) {
                 return o2.getDate().compareTo(o1.getDate());
             }
         });

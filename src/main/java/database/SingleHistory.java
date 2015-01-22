@@ -8,7 +8,7 @@ import java.util.Date;
 /**
  * Created by Albert on 2015-01-22.
  */
-public class History {
+public class SingleHistory {
 
     @Size(max = 16)
     @NotNull
@@ -25,7 +25,7 @@ public class History {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
-    public History(String hand, String evaluate, Date date) {
+    public SingleHistory(String hand, String evaluate, Date date) {
         this.hand = hand;
         this.evaluate = evaluate;
         this.date = date;

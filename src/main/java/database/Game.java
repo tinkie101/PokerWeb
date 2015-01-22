@@ -3,6 +3,7 @@ package database;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 /**
  * Created by Albert on 2015-01-21.
@@ -60,6 +61,16 @@ public class Game {
     public int getRoundID()
     {
         return roundID.getID();
+    }
+
+    public Date getDate()
+    {
+        return roundID.getDate();
+    }
+
+    public String getUsername()
+    {
+        return username.getUsername();
     }
 
 }
