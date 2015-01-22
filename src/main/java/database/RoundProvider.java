@@ -10,7 +10,7 @@ import java.util.Optional;
 public class RoundProvider extends BaseRepository {
 
     @UnitOfWork    //@transaction is for writes
-    public Optional<User> findRoundByID(Integer ID) {
+    public Optional<Round> findRoundByID(Integer ID) {
         return getSingleResult(getEntityManager().createQuery("SELECT r FROM Round r WHERE r.roundID = :ID").setParameter("ID", ID));
     }
 

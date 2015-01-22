@@ -1,0 +1,20 @@
+<#import "../layout/defaultLayout.ftl.html" as layout/>
+<@layout.myLayout "History Page">
+
+<h1 id='user'>User: ${user}</h1>
+<#list histories as history>
+    <div class="gameDiv" align="center">
+        <div style="padding:10px" align='center'>
+
+            <h3 style="color: grey; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">Date: <b>${history.date}</b></h3>
+
+            <#list history.hand?split(",") as card>
+                <img src='assets/images/cards/${card}.png' alt=${card} style='width:75px;height:100px'>
+            </#list>
+
+            <h2 style="color: rgba(225, 215, 0, 1.0); text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">Evaluate: <b>${history.evaluate}</b></h2>
+        </div>
+    </div>
+</#list>
+
+</@layout.myLayout>

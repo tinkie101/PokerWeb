@@ -1,13 +1,24 @@
 <div class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container">
 		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-				<span class="icon-bar"></span> 
-				<span class="icon-bar"></span> 
-				<span class="icon-bar"></span>
-			</button>
+
 			<a class="navbar-brand" href="/">${i18n("header.title")}</a>
 		</div>
+
+		<#if (flash.error)??>
+			<label style="padding:5px; float:right; margin:7px;" class="alert alert-danger">${flash.error}</label>
+		</#if>
+
+		<#if (flash.success)??>
+
+			<#if flash.success == "Logged In">
+				<a class="navbar-brand" href="/history">Game History</a>
+				<button style="padding:5px; float:right; margin:7px;" class="btn btn-danger" onclick="window.location.href='/logout'" type="button">Logout</button>
+			</#if>
+
+			<label style="padding:5px; float:right; margin:7px;" class="alert alert-success">${flash.success}</label>
+
+		</#if>
 		<!--/.navbar-collapse -->
 	</div>
 </div>

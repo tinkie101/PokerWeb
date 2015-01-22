@@ -23,6 +23,7 @@ public class SecureFilter implements Filter {
             return Results.redirect(router.getReverseRoute(ApplicationController.class, "index"));
 
         } else {
+            context.getFlashScope().success("Logged In");
             return chain.next(context);
         }
 

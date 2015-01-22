@@ -47,4 +47,19 @@ public class Game {
         this.roundID = round;
     }
 
+    public String getHand()
+    {
+        return hand;
+    }
+
+    public String getEvaluate()
+    {
+        return evaluate;
+    }
+
+    public int getRoundID()
+    {
+        return roundID.getID();
+    }
+
 }

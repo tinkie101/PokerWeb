@@ -13,8 +13,7 @@ import poker.cards.Hand;
 import poker.evaluators.HandEvaluator;
 import services.IPokerService;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Albert on 2015-01-16.
@@ -42,7 +41,7 @@ public class GameController {
         Hand hands[] = pokerService.generateHands();
 
         //store in db
-        Round round = new Round();
+        Round round = new Round(new Date());
         roundProvider.persist(round);
 
         List<Card> cards = new LinkedList<>();
@@ -91,4 +90,34 @@ public class GameController {
 
         return result;
     }
+
+    @FilterWith(SecureFilter.class)
+    public Result history(Context context) {
+        Result result = Results.html();
+
+        String username = context.getSession().get("username");
+        List<Game> games = gameProvider.findGamesByUsername(username);
+        List<History> histories = new LinkedList<>();
+
+        for(Game game : games)
+        {
+            Optional<Round> round = roundProvider.findRoundByID(game.getRoundID());
+
+            if(round.isPresent())
+                histories.add(new History(game.getHand(), game.getEvaluate(), round.get().getDate()));
+        }
+
+        Collections.sort(histories, new Comparator<History>() {
+            @Override
+            public int compare(History o1, History o2) {
+                return o2.getDate().compareTo(o1.getDate());
+            }
+        });
+
+        result.render("user", username);
+        result.render("histories", histories);
+
+        return result;
+    }
+
 }

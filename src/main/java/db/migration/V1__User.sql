@@ -7,6 +7,7 @@ CREATE TABLE User(
 
 CREATE TABLE Round(
     roundID int NOT NULL AUTO_INCREMENT,
+    date TIMESTAMP NOT NULL,
     PRIMARY KEY (roundID)
 );
 

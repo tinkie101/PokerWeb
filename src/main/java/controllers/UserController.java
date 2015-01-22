@@ -64,6 +64,7 @@ public class UserController {
     public Result logout(Context context)
     {
         context.getSession().clear();
+        context.getFlashScope().success("Successfully Logged Out!");
         return Results.redirect(router.getReverseRoute(ApplicationController.class, "index"));
     }
 
