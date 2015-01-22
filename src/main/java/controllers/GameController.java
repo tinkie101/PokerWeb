@@ -47,6 +47,9 @@ public class GameController {
 
         List<Card> cards = new LinkedList<>();
         List<String> evaluate = new LinkedList<>();
+        List<String> users = new LinkedList<>();
+
+        String username = context.getSession().get("username");
 
         for(int h = 0; h < hands.length; h++) {
             for (Card card : hands[h].getCards()) {
@@ -56,19 +59,12 @@ public class GameController {
             String evaluateString = HandEvaluator.getHandString(hands[h]);
             evaluate.add(evaluateString);
 
-            String username = context.getSession().get("username");
-
-            User user = userProvider.findUserByName(username).get();
+            String temp = context.getParameter("user"+(h+1));
+            users.add(temp);
+            User user = userProvider.findUserByName(temp).get();
 
             Game game = new Game(hands[h].toString(), evaluateString, user, round);
             gameProvider.persist(game);
-        }
-
-        List<String> users = new LinkedList<>();
-
-        //TODO Actual Users
-        for (int i = 0; i < 6; i++) {
-            users.add("user" + (i + 1));
         }
 
         result.render("users", users);
@@ -87,7 +83,6 @@ public class GameController {
 
         for (User user : users)
             usernames.add(user.getUsername());
-
 
         String superUser = context.getSession().get("username");
 

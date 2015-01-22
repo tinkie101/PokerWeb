@@ -14,13 +14,27 @@ body
 
 .gameDiv
 {
-    min-width:200px;
+    min-width:450px;
     border: 2px solid;
     border-radius: 25px;
     background-color: rgba(225, 0, 0, 0.5);
     width:50%;
-    min-height:350px;
+    min-height:250px;
     margin:auto;
+    margin-top:5px;
+    margin-bottom:5px;
+}
+
+.selectDiv
+{
+    min-width:200px;
+    border: 2px solid;
+    border-radius: 25px;
+    background-color: rgba(100, 200, 255, 0.5);
+    width:80%;
+    min-height:300px;
+    margin:auto;
+    padding:10px;
 }
 
 .card1

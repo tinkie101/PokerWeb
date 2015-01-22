@@ -1,40 +1,50 @@
 <#import "../layout/defaultLayout.ftl.html" as layout/>
 <@layout.myLayout "Game Page">
 
-<select class="form-control">
-    <option id=user1 value=${superUser}>${superUser}</option>
-</select>
+<div class="selectDiv">
+    <form class="navbar-form form-horizontal" align="center" method="post" action="/game">
+        <h1>Select Users:</h1>
 
-<select class="form-control">
-    <#list usernames as name>
-        <option id=user2 value=${name}>${name}</option>
-    </#list>
-</select>
+        <select class="form-control" name="user1">
+            <option id=user1 value=${superUser}>${superUser}</option>
+        </select>
 
-<select class="form-control">
-    <#list usernames as name>
-        <option id=user3 value=${name}>${name}</option>
-    </#list>
-</select>
+        <select class="form-control" name="user2">
+            <#list usernames as name>
+                <option id=user2 value=${name}>${name}</option>
+            </#list>
+        </select>
 
-<select class="form-control">
-    <#list usernames as name>
-        <option id=user4 value=${name}>${name}</option>
-    </#list>
-</select>
+        <select class="form-control" name="user3">
+            <#list usernames as name>
+                <option id=user3 value=${name}>${name}</option>
+            </#list>
+        </select>
 
-<select class="form-control">
-    <#list usernames as name>
-        <option id=user5 value=${name}>${name}</option>
-    </#list>
-</select>
+        <select class="form-control" name="user4">
+            <#list usernames as name>
+                <option id=user4 value=${name}>${name}</option>
+            </#list>
+        </select>
 
-<select class="form-control">
-    <#list usernames as name>
-        <option id=user6 value=${name}>${name}</option>
-    </#list>
-</select>
+        <select class="form-control" name="user5">
+            <#list usernames as name>
+                <option id=user5 value=${name}>${name}</option>
+            </#list>
+        </select>
 
-<button class="btn btn-primary" onclick="window.location.href='/game'" type="button">Play!</button>
+        <select class="form-control" name="user6">
+            <#list usernames as name>
+                <option id=user6 value=${name}>${name}</option>
+            </#list>
+        </select>
+
+        <div allign="center" style="margin-top:50px;">
+            <input id="play" style="min-width:100px;" class="btn btn-success" type="submit" value="Play!">
+        </div>
+    </form>
+
+    <button style="margin-top:20px;" class="btn btn-danger" onclick="window.location.href='/logout'" type="button">Logout</button>
+</div>
 
 </@layout.myLayout>
