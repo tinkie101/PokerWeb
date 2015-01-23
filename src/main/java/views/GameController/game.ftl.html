@@ -4,31 +4,34 @@
 <#assign userCount=0/>
 <#assign cardCount = 0/>
 
-    <#list users as user>
-        <div class="gameDiv" align="center">
-            <div align='center'>
-                <h1 id='user'>User: ${user}</h1>
+    <div class="gameDiv" align="center">
+        <table class="table-hover" style="width:90%; margin:auto; margin-bottom:5px; background-color: rgba(100, 150, 200, 0.0);">
+            <#list users as user>
+                <tr class="info">
+                   <td>${user}</td>
 
-                <img src='assets/images/cards/${cards[cardCount]}.png' class='card1' alt=${cards[cardCount]} style='width:75px;height:100px'>
-                <#assign cardCount = cardCount +1/>
+                    <td>
+                        <img src='assets/images/cards/${cards[cardCount]}.png' class='card1' alt=${cards[cardCount]} style='width:50px;height:80px; margin-top:2px; margin-bottom:2px;'>
+                        <#assign cardCount = cardCount +1/>
 
-                <img src='assets/images/cards/${cards[cardCount]}.png' class='card2' alt=${cards[cardCount]} style='width:75px;height:100px'>
-                <#assign cardCount = cardCount +1/>
+                        <img src='assets/images/cards/${cards[cardCount]}.png' class='card2' alt=${cards[cardCount]} style='width:50px;height:80px; margin-top:2px; margin-bottom:2px;'>
+                        <#assign cardCount = cardCount +1/>
 
-                <img src='assets/images/cards/${cards[cardCount]}.png' class='card3' alt=${cards[cardCount]} style='width:75px;height:100px'>
-                <#assign cardCount = cardCount +1/>
+                        <img src='assets/images/cards/${cards[cardCount]}.png' class='card3' alt=${cards[cardCount]} style='width:50px;height:80px; margin-top:2px; margin-bottom:2px;'>
+                        <#assign cardCount = cardCount +1/>
 
-                <img src='assets/images/cards/${cards[cardCount]}.png' class='card4' alt=${cards[cardCount]} style='width:75px;height:100px'>
-                <#assign cardCount = cardCount +1/>
+                        <img src='assets/images/cards/${cards[cardCount]}.png' class='card4' alt=${cards[cardCount]} style='width:50px;height:80px; margin-top:2px; margin-bottom:2px;'>
+                        <#assign cardCount = cardCount +1/>
 
-                <img src='assets/images/cards/${cards[cardCount]}.png' class='card5' alt=${cards[cardCount]} style='width:75px;height:100px'>
-                <#assign cardCount = cardCount +1/>
+                        <img src='assets/images/cards/${cards[cardCount]}.png' class='card5' alt=${cards[cardCount]} style='width:50px;height:80px; margin-top:2px; margin-bottom:2px;'>
+                        <#assign cardCount = cardCount +1/>
+                        </td>
 
-
-                <h2 class='EvaluateHeader'>Evaluate: <b>${evaluate[userCount]}</b></h2>
-            </div>
-        </div>
-        <#assign userCount = userCount + 1/>
-    </#list>
+                    <td>${evaluate[userCount]}</td>
+                </tr>
+                <#assign userCount = userCount + 1/>
+            </#list>
+        </table>
+    </div>
 
 </@layout.myLayout>

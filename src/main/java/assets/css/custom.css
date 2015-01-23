@@ -22,19 +22,6 @@ body
 
 .gameDiv
 {
-    min-width:450px;
-    border: 2px solid;
-    border-radius: 25px;
-    background-color: rgba(225, 0, 0, 0.5);
-    width:50%;
-    min-height:250px;
-    margin:auto;
-    margin-top:5px;
-    margin-bottom:5px;
-}
-
-#historyDiv
-{
     width:100%;
     margin-top:10px;
     margin-bottom:10px;
