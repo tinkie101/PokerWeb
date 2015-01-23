@@ -240,45 +240,42 @@ public class HandEvaluator {
             return "High Card";
         }
     }
-//
-//    public static Integer getHandScore(Hand hand) {
-//
-//        Integer result = 0;
-//
-//        if(isStraitFlush(hand)) {
-//            result += 105;
-//        }
-//        else if(isFourOfAKind(hand)) {
-//            result += 92;
-//        }
-//        else if(isFullHouse(hand)) {
-//            result += 79;
-//        }
-//        else if(isFlush(hand)) {
-//            result += 66;
-//        }
-//        else if(isStrait(hand)) {
-//            result += 53;
-//        }
-//        else if(isThreeOfAKind(hand)) {
-//            result += 40;
-//        }
-//        else if(isTwoPair(hand)) {
-//            result += 27;
-//            result += getHighCardForPairs(hand);
-//        }
-//        else if(isOnePair(hand)) {
-//            result += 14;
-//            result += getHighCardForPairs(hand);
-//        }
-//        else//"High Card";
-//        {
-//            result += 1;
-//            result += getHighCard(hand);
-//        }
-//
-//        return result;
-//    }
+
+    public static Integer getHandScore(Hand hand) {
+
+        Integer result = 0;
+
+        if(isStraitFlush(hand)) {
+            result += 9;
+        }
+        else if(isFourOfAKind(hand)) {
+            result += 8;
+        }
+        else if(isFullHouse(hand)) {
+            result += 7;
+        }
+        else if(isFlush(hand)) {
+            result += 6;
+        }
+        else if(isStrait(hand)) {
+            result += 5;
+        }
+        else if(isThreeOfAKind(hand)) {
+            result += 4;
+        }
+        else if(isTwoPair(hand)) {
+            result += 3;
+        }
+        else if(isOnePair(hand)) {
+            result += 2;
+        }
+        else//"High Card";
+        {
+            result += 1;
+        }
+
+        return result;
+    }
 //
 //    private static int getHighCard(Hand hand)
 //    {

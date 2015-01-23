@@ -8,6 +8,8 @@ CREATE TABLE User(
 CREATE TABLE Round(
     roundID int NOT NULL AUTO_INCREMENT,
     date TIMESTAMP NOT NULL,
+    winner VARCHAR(255) NOT NULL,
+    winnerNum int NOT NULL,
     PRIMARY KEY (roundID)
 );
 

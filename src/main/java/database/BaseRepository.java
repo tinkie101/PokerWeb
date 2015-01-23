@@ -30,6 +30,12 @@ public class BaseRepository<T> {
         getEntityManager().persist(entity);
     }
 
+
+    @Transactional
+    public void merge(T entity){
+        getEntityManager().merge(entity);
+    }
+
     protected Optional<T> getSingleResult(Query query)
     {
         List<T> results= query.getResultList();

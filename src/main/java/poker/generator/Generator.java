@@ -41,15 +41,15 @@ public class Generator {
         return hand;
     }
 
-    public static Hand[] generateHands()
+    public static Hand[] generateHands(int numHands)
     {
         List<Card> deck = generateDeck();
 
-        Hand hands[] = new Hand[6];
+        Hand hands[] = new Hand[numHands];
 
         int i = 0;
 
-        for(int h = 0; h < 6; h++) {
+        for(int h = 0; h < numHands; h++) {
             hands[h] = new Hand(deck.get(i++), deck.get(i++), deck.get(i++), deck.get(i++),deck.get(i++));
         }
 

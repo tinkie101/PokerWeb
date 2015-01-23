@@ -9,5 +9,5 @@ public interface IPokerService {
 
     public String getHandString(Hand hand);
     public Hand generateHand();
-    public Hand[] generateHands();
+    public Hand[] generateHands(int numHands);
 }

@@ -22,11 +22,21 @@ public class Round {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
+    @Column(name = "winner")
+    @NotNull
+    private String winner;
+
+    @Column(name = "winnerNum")
+    @NotNull
+    private int winnerNum;
+
     public Round() {
     }
 
-    public Round(Date date) {
+    public Round(Date date, String winner, int winnerNum) {
+        this.winner = winner;
         this.date = date;
+        this.winnerNum = winnerNum;
     }
 
     public int getID() {
@@ -35,6 +45,26 @@ public class Round {
 
     public Date getDate(){
         return date;
+    }
+
+    public void setWinner(String winner)
+    {
+        this.winner = winner;
+    }
+
+    public String getWinner()
+    {
+        return winner;
+    }
+
+    public void setWinnerNum(int num)
+    {
+        this.winnerNum = num;
+    }
+
+    public int getWinnerNum()
+    {
+        return winnerNum;
     }
 
 }

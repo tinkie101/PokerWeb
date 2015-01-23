@@ -58,9 +58,9 @@ public class Game {
         return evaluate;
     }
 
-    public int getRoundID()
+    public Round getRoundID()
     {
-        return roundID.getID();
+        return roundID;
     }
 
     public Date getDate()

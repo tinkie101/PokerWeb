@@ -7,7 +7,13 @@
     <div class="gameDiv" align="center">
         <table class="table-hover" style="width:90%; margin:auto; margin-bottom:5px; background-color: rgba(100, 150, 200, 0.0);">
             <#list users as user>
-                <tr class="info">
+
+                <#if userCount = winner>
+                    <tr class="info" style="background-color: rgba(120,240,120,0.5);">
+                    <#else>
+                        <tr class="info">
+                </#if>
+
                    <td>${user}</td>
                     <td>
                         <img src='assets/images/cards/${cards[cardCount]}.png' class='card1' alt=${cards[cardCount]} style='width:50px;height:80px; margin-top:2px; margin-bottom:2px;'>
@@ -25,7 +31,7 @@
                         <img src='assets/images/cards/${cards[cardCount]}.png' class='card5' alt=${cards[cardCount]} style='width:50px;height:80px; margin-top:2px; margin-bottom:2px;'>
                         <#assign cardCount = cardCount +1/>
                         </td>
-                    <td>${evaluate[userCount]}</td>
+                    <td class="card4">${evaluate[userCount]}</td>
                 </tr>
                 <#assign userCount = userCount + 1/>
             </#list>

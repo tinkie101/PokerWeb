@@ -71,8 +71,7 @@ public class ApplicationController {
             }
         });
 
-            List<List<Game>> games= new LinkedList<>();
-
+        List<List<Game>> games= new LinkedList<>();
 
         for(Round round: rounds)
         {

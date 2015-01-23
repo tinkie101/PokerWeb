@@ -23,7 +23,7 @@ public class PokerService implements IPokerService {
     }
 
     @Override
-    public Hand[] generateHands(){
-        return Generator.generateHands();
+    public Hand[] generateHands(int numHands){
+        return Generator.generateHands(numHands);
     }
 }

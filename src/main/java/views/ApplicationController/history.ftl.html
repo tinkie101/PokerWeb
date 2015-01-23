@@ -6,14 +6,20 @@
 
         <div class="gameDiv">
             <table class="table-hover" style="width:90%; margin:auto; margin-bottom:5px; background-color: rgba(100, 150, 200, 0.0);">
+                <#assign userCount = 0/>
                 <#list rounds as game>
-
                     <#if x = 0>
                         <caption class="date">Date: ${game.date}</caption>
                         <#assign x = 1/>
                     </#if>
 
-                    <tr class="info">
+
+
+                    <#if userCount = game.roundID.winnerNum>
+                        <tr class="info" style="background-color: rgba(120,240,120,0.5);">
+                            <#else>
+                                <tr class="info">
+                    </#if>
                         <td>${game.username}</td>
                         <td>
                             <#list game.hand?split(",") as card>
@@ -22,6 +28,7 @@
                         </td>
                         <td>${game.evaluate}</td>
                     </tr>
+                    <#assign userCount = userCount + 1/>
                 </#list>
             </table>
         </div>
