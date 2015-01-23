@@ -1,6 +1,6 @@
 /* Add additional stylesheets below
 -------------------------------------------------- */
-h1,#user{
+h1,#user,td{
     color: white;
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
@@ -11,6 +11,14 @@ body
     background-attachment: fixed;
     background-repeat:no-repeat;
     background-color:black;
+}
+
+
+button
+{
+    margin:10px;
+    min-width:100px;
+    min-height:33px;
 }
 
 .info
@@ -113,6 +121,17 @@ td:last-child {
     animation-fill-mode: forwards;
 }
 
+#winner
+{
+    position: relative;
+    -webkit-animation: winner 4.5s;  /* Chrome, Safari, Opera */
+    -webkit-animation-iteration-count: 1;  /* Chrome, Safari, Opera */
+    -webkit-animation-fill-mode: forwards;  /* Chrome, Safari, Opera */
+    animation: winner 4.5s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
 .EvaluateHeader
 {
     position: relative;
@@ -148,3 +167,15 @@ td:last-child {
     font-size:0px;}
     to {color: rgba(225, 215, 0, 1.0);
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;}
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes winner {
+    from {background-color: rgba(120,240,120,0.0);}
+    to {background-color: rgba(120,245,120,0.6);}
+}
+
+@keyframes winner {
+    from {background-color: rgba(120,240,120,0.0);}
+    to {background-color: rgba(120,245,120,0.6);}
+ }

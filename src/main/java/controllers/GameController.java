@@ -91,6 +91,19 @@ public class GameController {
     }
 
     @FilterWith(SecureFilter.class)
+    public Result selectGametype(Context context) {
+        Result result = Results.html();
+        return result;
+    }
+
+    @FilterWith(SecureFilter.class)
+    public Result multiplayer(Context context) {
+        Result result = Results.html();
+
+        return result;
+    }
+
+    @FilterWith(SecureFilter.class)
     public Result selectUsers(Context context) {
         Result result = Results.html();
 

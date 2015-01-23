@@ -44,7 +44,7 @@ public class ApplicationController {
     public Result index(Context context)
     {
         if (context.getSession() != null && context.getSession().get(USERNAME) != null) {
-            return Results.redirect(router.getReverseRoute(GameController.class, "selectUsers"));
+            return Results.redirect(router.getReverseRoute(GameController.class, "selectGametype"));
         }
 
         Result result = Results.html();
