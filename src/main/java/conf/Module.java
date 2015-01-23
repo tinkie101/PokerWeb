@@ -19,6 +19,7 @@ package conf;
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
 import database.UserProvider;
+import services.ActiveGamesService;
 import services.IPokerService;
 import services.PokerService;
 
@@ -31,6 +32,7 @@ public class Module extends AbstractModule {
         // bind your injections here!
         bind(IPokerService.class).to(PokerService.class);
         bind(UserProvider.class);
+        bind(ActiveGamesService.class);
         
     }
 
