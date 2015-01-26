@@ -27,7 +27,7 @@ public class ActiveGamesService {
 
     public boolean addUserToGame(Round round, User user) {
         for (ActiveGame game : activeGames) {
-            if (game.getRound().equals(round) && !game.contains(user)) {
+            if (game.getRound().getID() == round.getID() && !game.contains(user)) {
                 game.addUser(user);
                 return true;
             }
@@ -65,7 +65,7 @@ public class ActiveGamesService {
         int count = 0;
         for(ActiveGame game:activeGames)
         {
-            if(game.getRound().equals(round))
+            if(game.getRound().getID() == round.getID())
                 return count;
 
             count++;
@@ -79,15 +79,16 @@ public class ActiveGamesService {
         List<String> result = new LinkedList<>();
 
         for (ActiveGame game : activeGames) {
-            if (game.getRound().equals(round)) {
+            if (game.getRound().getID() == round.getID()) {
                 result = game.getUsers();
             }
         }
         return result;
     }
 
-    public Round getRoundAt(int pos)
+    public Round getRoundAts(int pos)
     {
         return activeGames.get(pos).getRound();
     }
+
 }

@@ -26,7 +26,7 @@
             <tr>
                 <td>
                     <form method="post" action="/joinGame">
-                        <input hidden type="number" name="gameNum" value=${count}>
+                        <input hidden type="number" name="roundID" value=${game.round.ID}>
                         <input hidden type="string" name="user" value=${user}>
                         <input id="play" style="min-width:100px;" class="btn btn-success" type="submit" value="Join">
                     </form>

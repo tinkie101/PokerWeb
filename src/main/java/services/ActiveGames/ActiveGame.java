@@ -12,9 +12,11 @@ import java.util.List;
 public class ActiveGame {
     private Round round;
     private List<User> users;
+    private int count;
 
     public ActiveGame(Round round) {
         this.round = round;
+        count = 0;
         users = new LinkedList<>();
     }
 

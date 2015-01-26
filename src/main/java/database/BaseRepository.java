@@ -27,9 +27,12 @@ public class BaseRepository<T> {
 
     @Transactional
     public void persist(T entity){
-        getEntityManager().persist(entity);
+        try {
+            getEntityManager().persist(entity);
+        } catch (Exception e) {
+            throw e;
+        }
     }
-
 
     @Transactional
     public void merge(T entity){

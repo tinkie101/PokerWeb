@@ -4,10 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import database.*;
 import filters.SecureFilter;
-import ninja.Context;
-import ninja.FilterWith;
-import ninja.Result;
-import ninja.Results;
+import ninja.*;
 import poker.cards.Card;
 import poker.cards.Hand;
 import poker.evaluators.HandEvaluator;
@@ -38,31 +35,31 @@ public class GameController {
     @Inject
     private GameProvider gameProvider;
 
+    @Inject
+    Router router;
+
     @FilterWith(SecureFilter.class)
     public Result game(Context context) {
         Result result = Results.html();
 
-        //TODO get round corresponding to this game
-        int gameNum = Integer.parseInt(context.getParameter("gameNum"));
+        int roundID = Integer.parseInt(context.getParameter("roundID"));
 
-        //Create Round
-        Integer numPlayers = Integer.parseInt(context.getParameter("numPlayers"));
-        System.out.println(numPlayers);
-        Hand hands[] = pokerService.generateHands(numPlayers);
-
-        List<Card> cards = new LinkedList<>();
-        List<String> evaluate = new LinkedList<>();
-        List<String> users = new LinkedList<>();
-
-        String username = context.getSession().get("username");
-
+        Round round;
         String winner = "NA";
         int winningScore = -1;
         int winnerNum = -1;
 
-        //store in db
-        Round round = new Round(new Date(), winner, winnerNum);
-        roundProvider.persist(round);
+        round = roundProvider.findRoundByID(roundID).get();
+
+        if(!round.getWinner().equals("NA"))
+            return Results.redirect(router.getReverseRoute(GameController.class, "selectGametype"));
+
+        Integer numPlayers = Integer.parseInt(context.getParameter("numPlayers"));
+
+        Hand hands[] = pokerService.generateHands(numPlayers);
+        List<Card> cards = new LinkedList<>();
+        List<String> evaluate = new LinkedList<>();
+        List<String> users = new LinkedList<>();
 
         for(int h = 0; h < hands.length; h++) {
             for (Card card : hands[h].getCards()) {
@@ -127,9 +124,10 @@ public class GameController {
         Round round = activeGamesService.getHostedRound(temp);
         if(round == null) {
             String winner = "NA";
-            int winningScore = -1;
             int winnerNum = -1;
             round = new Round(new Date(), winner, winnerNum);
+            roundProvider.persist(round);
+
             activeGamesService.addActiveGame(round);
 
             //Add host as a player
@@ -139,7 +137,7 @@ public class GameController {
 
         List<String> players = activeGamesService.getGameUsernames(round);
 
-        result.render("gameNum", activeGamesService.getRoundIndex(round));
+        result.render("roundID", round.getID());
         result.render("players", players);
 
         return result;
@@ -149,12 +147,28 @@ public class GameController {
     public Result joinGame(Context context) {
         Result result = Results.html();
 
-        int gameNum = Integer.parseInt(context.getParameter("gameNum"))-1;
-        Round round = activeGamesService.getRoundAt(gameNum);
+        int roundID = Integer.parseInt(context.getParameter("roundID"));
+        Round round;
+        try {
+            round = roundProvider.findRoundByID(roundID).get();
+        }
+        catch(Exception e) {
+            return Results.redirect(router.getReverseRoute(GameController.class, "selectGametype"));
+        }
+
+        if(!round.getWinner().equals("NA"))
+        {
+            List<Game> games = gameProvider.findGamesByRoundID(round.getID());
+            result.render("waiting", 0);
+            result.render("games", games);
+
+            return result;
+        }
+        result.render("waiting", 1);
 
         String username = context.getParameter("user");
         User user = userProvider.findUserByName(username).get();
-        System.out.println(activeGamesService.addUserToGame(round, user) + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        activeGamesService.addUserToGame(round, user);
 
         List<String> players = activeGamesService.getGameUsernames(round);
         result.render("players", players);
