@@ -43,6 +43,7 @@ public class GameController {
         Result result = Results.html();
 
         int roundID = Integer.parseInt(context.getParameter("roundID"));
+        activeGamesService.removeActiveGame(roundID);
 
         Round round;
         String winner = "NA";

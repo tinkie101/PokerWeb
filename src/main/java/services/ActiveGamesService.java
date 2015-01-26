@@ -35,8 +35,13 @@ public class ActiveGamesService {
         return false;
     }
 
-    public boolean removeActiveGame(ActiveGame activeGame) {
-        return activeGames.remove(activeGame);
+    public void removeActiveGame(int roundID)
+    {
+        for(ActiveGame game: activeGames)
+        {
+            if(game.getRound().getID() == roundID)
+                activeGames.remove(game);
+        }
     }
 
     public List<ActiveGame> getActiveGames()
