@@ -3,6 +3,7 @@ package services;
 import com.google.inject.Singleton;
 import database.Round;
 import database.User;
+import services.ActiveGames.ActiveGame;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -15,41 +16,78 @@ public class ActiveGamesService {
 
     private List<ActiveGame> activeGames;
 
-    private class ActiveGame{
-        protected Round round;
-        protected List<User> users;
-
-        ActiveGame(Round round)
-        {
-            this.round = round;
-            users = new LinkedList<>();
-        }
-    }
-
-    ActiveGamesService()
-    {
+    ActiveGamesService() {
         activeGames = new LinkedList<>();
     }
 
-    public void addActiveGame(Round round)
-    {
+    public void addActiveGame(Round round) {
         ActiveGame tempGame = new ActiveGame(round);
         activeGames.add(tempGame);
     }
 
-    public boolean addUserToGame(Round round, User user)
+    public boolean addUserToGame(Round round, User user) {
+        for (ActiveGame game : activeGames) {
+            if (game.getRound().equals(round) && !game.contains(user)) {
+                game.addUser(user);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean removeActiveGame(ActiveGame activeGame) {
+        return activeGames.remove(activeGame);
+    }
+
+    public List<ActiveGame> getActiveGames()
+    {
+        LinkedList<ActiveGame> result = new LinkedList<>();
+        for(ActiveGame game: activeGames)
+        {
+            result.add(game);
+        }
+        return result;
+    }
+
+    public Round getHostedRound(String username)
     {
         for(ActiveGame game: activeGames)
         {
-            if(game.round.equals(round))
-            {
-                //add user
+            if(game.getUsers().size() > 0 && game.getUsers().get(0).equals(username))
+                return game.getRound();
+        }
+
+        return null;
+    }
+
+    public int getRoundIndex(Round round)
+    {
+        int count = 0;
+        for(ActiveGame game:activeGames)
+        {
+            if(game.getRound().equals(round))
+                return count;
+
+            count++;
+        }
+
+        return -1;
+    }
+
+    public List<String> getGameUsernames(Round round)
+    {
+        List<String> result = new LinkedList<>();
+
+        for (ActiveGame game : activeGames) {
+            if (game.getRound().equals(round)) {
+                result = game.getUsers();
             }
         }
+        return result;
     }
-//
-//    public void removeRound(ActiveGame activeGames)
-//    {
-//        activeGames.remove(activeGames);
-//    }
+
+    public Round getRoundAt(int pos)
+    {
+        return activeGames.get(pos).getRound();
+    }
 }

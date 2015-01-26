@@ -11,6 +11,7 @@ import ninja.Results;
 import poker.cards.Card;
 import poker.cards.Hand;
 import poker.evaluators.HandEvaluator;
+import services.ActiveGames.ActiveGame;
 import services.ActiveGamesService;
 import services.IPokerService;
 
@@ -41,8 +42,10 @@ public class GameController {
     public Result game(Context context) {
         Result result = Results.html();
 
+        //TODO get round corresponding to this game
+        int gameNum = Integer.parseInt(context.getParameter("gameNum"));
+
         //Create Round
-        //TODO number of hands
         Integer numPlayers = Integer.parseInt(context.getParameter("numPlayers"));
         System.out.println(numPlayers);
         Hand hands[] = pokerService.generateHands(numPlayers);
@@ -107,32 +110,54 @@ public class GameController {
     public Result multiplayer(Context context) {
         Result result = Results.html();
 
+        List<ActiveGame> games = activeGamesService.getActiveGames();
+
+        String username = context.getSession().get("username");
+
+        result.render("games", games);
+        result.render("user", username);
         return result;
     }
 
     @FilterWith(SecureFilter.class)
-    public Result processSelectedUsers(Context context) {
+    public Result newMultiplayerGame(Context context)
+    {
+        Result result = Results.html();
+        String temp = context.getParameter("user");
+        Round round = activeGamesService.getHostedRound(temp);
+        if(round == null) {
+            String winner = "NA";
+            int winningScore = -1;
+            int winnerNum = -1;
+            round = new Round(new Date(), winner, winnerNum);
+            activeGamesService.addActiveGame(round);
+
+            //Add host as a player
+            User user = userProvider.findUserByName(temp).get();
+            activeGamesService.addUserToGame(round, user);
+        }
+
+        List<String> players = activeGamesService.getGameUsernames(round);
+
+        result.render("gameNum", activeGamesService.getRoundIndex(round));
+        result.render("players", players);
+
+        return result;
+    }
+
+    @FilterWith(SecureFilter.class)
+    public Result joinGame(Context context) {
         Result result = Results.html();
 
-        Integer numPlayers = Integer.parseInt(context.getParameter("numPlayers"));
-        System.out.println(numPlayers);
+        int gameNum = Integer.parseInt(context.getParameter("gameNum"))-1;
+        Round round = activeGamesService.getRoundAt(gameNum);
 
-        String winner = "NA";
-        int winningScore = -1;
-        int winnerNum = -1;
-        Round round = new Round(new Date(), winner, winnerNum);
+        String username = context.getParameter("user");
+        User user = userProvider.findUserByName(username).get();
+        System.out.println(activeGamesService.addUserToGame(round, user) + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
-        activeGamesService.addActiveGame(round);
-
-
-
-        for(int i = 0; i < numPlayers; i++)
-        {
-            String temp = context.getParameter("user"+(i+1));
-            User user = userProvider.findUserByName(temp).get();
-
-
-        }
+        List<String> players = activeGamesService.getGameUsernames(round);
+        result.render("players", players);
 
         return result;
     }

@@ -1,0 +1,39 @@
+<#import "../layout/defaultLayout.ftl.html" as layout/>
+<@layout.myLayout "New Multiplayer Page">
+
+<div class="selectDiv" align="center">
+    <form class="navbar-form form-horizontal" align="center" method="post" action="/game">
+
+        <#assign count = 0/>
+
+        <#list players as player>
+            <#assign count = count+1/>
+            <input hidden type="string" name="user${count}" value=${player}>
+        </#list>
+
+
+        <input hidden type="number" name="numPlayers" min="1" value=${count}>
+        <input hidden type="number" name="gameNum" value=${gameNum}>
+
+        <div allign="center" style="margin-top:50px;">
+            <input id="play" style="min-width:100px;" class="btn btn-success" type="submit" value="Play!">
+        </div>
+    </form>
+
+    <table style="background-color: rgba(10, 10, 20, 0.3); margin:10px;">
+        <th style="background-color: rgba(10, 10, 25, 0.3);">
+            <thead>
+                <td style="color:yellow;">Players: </td>
+            </thead>
+        </th>
+
+        <#list players as player>
+            <tr>
+                <td>${player}</td>
+            </tr>
+        </#list>
+    </table>
+
+</div>
+
+</@layout.myLayout>
