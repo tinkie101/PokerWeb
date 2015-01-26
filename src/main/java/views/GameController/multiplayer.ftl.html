@@ -1,6 +1,24 @@
 <#import "../layout/defaultLayout.ftl.html" as layout/>
 <@layout.myLayout "Select USers Page">
 
+<script>
+    function update()
+    {
+        $(document).ready(function(){
+            $.ajax({
+                    url: "/activeGames"
+                })
+                .done(function( data ) {
+
+                    $('#gameList').html( data );
+
+                    update();
+                });
+        });
+    }
+    update();
+</script>
+
 <div class="selectDiv" align="center">
 
     <form method="post" action="/newMultiplayerGame">
@@ -8,32 +26,9 @@
         <input id="host" style="min-width:100px;" class="btn btn-success" type="submit" value="Host Game">
     </form>
 
-    <table style="background-color: rgba(10, 10, 20, 0.3); margin:10px;">
-        <#assign count=0/>
-        <#list games as game>
-            <#assign count=count+1/>
-            <th style="background-color: rgba(10, 10, 25, 0.3);">
-                <thead>
-                    <td style="color:yellow;">Game ${count}</td>
-                </thead>
-            </th>
-            <tr>
-                <#list game.users as user>
-                    <td>${user}</td>
-                </#list>
-            </tr>
-
-            <tr>
-                <td>
-                    <form method="post" action="/joinGame">
-                        <input hidden type="number" name="roundID" value=${game.round.ID}>
-                        <input hidden type="string" name="user" value=${user}>
-                        <input id="play" style="min-width:100px;" class="btn btn-success" type="submit" value="Join">
-                    </form>
-                </td>
-            </tr>
-        </#list>
-    </table>
+    <div id="gameList">
+        <#include "activeGames.ftl.html"/>
+    </div>
 
 </div>
 

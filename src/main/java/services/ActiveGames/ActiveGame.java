@@ -3,6 +3,7 @@ package services.ActiveGames;
 import database.Round;
 import database.User;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,15 +13,25 @@ import java.util.List;
 public class ActiveGame {
     private Round round;
     private List<User> users;
-    private int count;
+
+    private Date lastUpdate;
 
     public ActiveGame(Round round) {
         this.round = round;
-        count = 0;
         users = new LinkedList<>();
+        lastUpdate = new Date();
+    }
+
+    public ActiveGame(ActiveGame game)
+    {
+        this.round = game.round;
+        this.users = game.users;
+        lastUpdate = new Date();
+
     }
 
     public void addUser(User user) {
+        lastUpdate = new Date();
         users.add(user);
     }
 
@@ -49,5 +60,10 @@ public class ActiveGame {
                 return true;
         }
         return false;
+    }
+
+    public Date getDate()
+    {
+        return lastUpdate;
     }
 }

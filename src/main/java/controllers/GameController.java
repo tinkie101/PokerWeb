@@ -117,6 +117,43 @@ public class GameController {
         return result;
     }
 
+    private boolean isSameGames(List<ActiveGame> oldGames, List<ActiveGame> newGames)
+    {
+        if(!oldGames.equals(newGames))
+            return false;
+
+        for(int i = 0; i < oldGames.size(); i++)
+        {
+            if(oldGames.get(i).getDate().compareTo(newGames.get(i).getDate()) != 0)
+                return false;
+        }
+
+        return true;
+    }
+
+    @FilterWith(SecureFilter.class)
+    public Result activeGames(Context context) {
+        Result result = Results.html();
+
+        List<ActiveGame> oldGames = activeGamesService.getActiveGames();
+        List<ActiveGame> newGames = activeGamesService.getActiveGames();
+
+        while(isSameGames(oldGames, newGames)) {
+            try {
+                Thread.sleep(100);
+                newGames = activeGamesService.getActiveGames();
+            } catch (Exception e) {
+
+            }
+        }
+
+        String username = context.getSession().get("username");
+
+        result.render("games", newGames);
+        result.render("user", username);
+        return result;
+    }
+
     @FilterWith(SecureFilter.class)
     public Result newMultiplayerGame(Context context)
     {
@@ -129,10 +166,10 @@ public class GameController {
             round = new Round(new Date(), winner, winnerNum);
             roundProvider.persist(round);
 
-            activeGamesService.addActiveGame(round);
-
             //Add host as a player
             User user = userProvider.findUserByName(temp).get();
+
+            activeGamesService.addActiveGame(round);
             activeGamesService.addUserToGame(round, user);
         }
 

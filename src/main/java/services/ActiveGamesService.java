@@ -1,6 +1,7 @@
 package services;
 
 import com.google.inject.Singleton;
+import database.Game;
 import database.Round;
 import database.User;
 import services.ActiveGames.ActiveGame;
@@ -49,7 +50,8 @@ public class ActiveGamesService {
         LinkedList<ActiveGame> result = new LinkedList<>();
         for(ActiveGame game: activeGames)
         {
-            result.add(game);
+            ActiveGame temp = new ActiveGame(game);
+            result.add(temp);
         }
         return result;
     }
