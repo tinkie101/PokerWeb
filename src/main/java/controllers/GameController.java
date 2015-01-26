@@ -116,7 +116,7 @@ public class GameController {
         result.render("user", username);
         return result;
     }
-
+//TODO Join game and newMultiplayer game auto update
     @FilterWith(SecureFilter.class)
     public Result activeGames(Context context) {
         Result result = Results.html();
