@@ -117,31 +117,20 @@ public class GameController {
         return result;
     }
 
-    private boolean isSameGames(List<ActiveGame> oldGames, List<ActiveGame> newGames)
-    {
-        if(!oldGames.equals(newGames))
-            return false;
-
-        for(int i = 0; i < oldGames.size(); i++)
-        {
-            if(oldGames.get(i).getDate().compareTo(newGames.get(i).getDate()) != 0)
-                return false;
-        }
-
-        return true;
-    }
-
     @FilterWith(SecureFilter.class)
     public Result activeGames(Context context) {
         Result result = Results.html();
 
-        List<ActiveGame> oldGames = activeGamesService.getActiveGames();
-        List<ActiveGame> newGames = activeGamesService.getActiveGames();
+        List<ActiveGame> games = activeGamesService.getActiveGames();
 
-        while(isSameGames(oldGames, newGames)) {
+        Date oldDate = activeGamesService.getDate();
+        Date newDate = activeGamesService.getDate();
+
+        while(oldDate.compareTo(newDate) == 0) {
             try {
                 Thread.sleep(100);
-                newGames = activeGamesService.getActiveGames();
+                newDate = activeGamesService.getDate();
+                games = activeGamesService.getActiveGames();
             } catch (Exception e) {
 
             }
@@ -149,7 +138,7 @@ public class GameController {
 
         String username = context.getSession().get("username");
 
-        result.render("games", newGames);
+        result.render("games", games);
         result.render("user", username);
         return result;
     }

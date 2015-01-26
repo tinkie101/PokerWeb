@@ -6,6 +6,7 @@ import database.Round;
 import database.User;
 import services.ActiveGames.ActiveGame;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,12 +17,20 @@ import java.util.List;
 public class ActiveGamesService {
 
     private List<ActiveGame> activeGames;
+    private Date lastUpdate;
 
     ActiveGamesService() {
         activeGames = new LinkedList<>();
+        lastUpdate = new Date();
+    }
+
+    public Date getDate()
+    {
+        return lastUpdate;
     }
 
     public void addActiveGame(Round round) {
+        lastUpdate = new Date();
         ActiveGame tempGame = new ActiveGame(round);
         activeGames.add(tempGame);
     }
@@ -29,6 +38,7 @@ public class ActiveGamesService {
     public boolean addUserToGame(Round round, User user) {
         for (ActiveGame game : activeGames) {
             if (game.getRound().getID() == round.getID() && !game.contains(user)) {
+                lastUpdate = new Date();
                 game.addUser(user);
                 return true;
             }
@@ -40,8 +50,10 @@ public class ActiveGamesService {
     {
         for(ActiveGame game: activeGames)
         {
-            if(game.getRound().getID() == roundID)
+            if(game.getRound().getID() == roundID) {
+                lastUpdate = new Date();
                 activeGames.remove(game);
+            }
         }
     }
 
@@ -50,8 +62,7 @@ public class ActiveGamesService {
         LinkedList<ActiveGame> result = new LinkedList<>();
         for(ActiveGame game: activeGames)
         {
-            ActiveGame temp = new ActiveGame(game);
-            result.add(temp);
+            result.add(game);
         }
         return result;
     }
@@ -67,20 +78,6 @@ public class ActiveGamesService {
         return null;
     }
 
-    public int getRoundIndex(Round round)
-    {
-        int count = 0;
-        for(ActiveGame game:activeGames)
-        {
-            if(game.getRound().getID() == round.getID())
-                return count;
-
-            count++;
-        }
-
-        return -1;
-    }
-
     public List<String> getGameUsernames(Round round)
     {
         List<String> result = new LinkedList<>();
@@ -91,11 +88,6 @@ public class ActiveGamesService {
             }
         }
         return result;
-    }
-
-    public Round getRoundAts(int pos)
-    {
-        return activeGames.get(pos).getRound();
     }
 
 }
