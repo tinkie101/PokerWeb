@@ -116,30 +116,71 @@ public class GameController {
         result.render("user", username);
         return result;
     }
-//TODO Join game and newMultiplayer game auto update
-    @FilterWith(SecureFilter.class)
-    public Result activeGames(Context context) {
+
+@FilterWith(SecureFilter.class)
+public Result activeGames(Context context) {
+    Result result = Results.html();
+
+    List<ActiveGame> games = activeGamesService.getActiveGames();
+
+    Date oldDate = activeGamesService.getDate();
+    Date newDate = activeGamesService.getDate();
+
+    while(oldDate.compareTo(newDate) == 0) {
+        try {
+            Thread.sleep(100);
+            newDate = activeGamesService.getDate();
+            games = activeGamesService.getActiveGames();
+        } catch (Exception e) {
+
+        }
+    }
+
+    String username = context.getSession().get("username");
+
+    result.render("games", games);
+    result.render("user", username);
+    return result;
+}
+    public Result activeJoinGames(Context context) {
         Result result = Results.html();
 
-        List<ActiveGame> games = activeGamesService.getActiveGames();
+        int roundID = Integer.parseInt(context.getParameter("roundID"));
+        Round round;
+        try {
+            round = roundProvider.findRoundByID(roundID).get();
+        }
+        catch(Exception e) {
+            return Results.redirect(router.getReverseRoute(GameController.class, "selectGametype"));
+        }
 
         Date oldDate = activeGamesService.getDate();
         Date newDate = activeGamesService.getDate();
 
-        while(oldDate.compareTo(newDate) == 0) {
+        List<String> players = activeGamesService.getGameUsernames(round);
+
+        while(oldDate.compareTo(newDate) == 0 && players.size() != 0) {
             try {
                 Thread.sleep(100);
                 newDate = activeGamesService.getDate();
-                games = activeGamesService.getActiveGames();
+                players = activeGamesService.getGameUsernames(round);
+
             } catch (Exception e) {
 
             }
         }
+        System.out.println("exit");
 
-        String username = context.getSession().get("username");
+        if (players.size() == 0) {
+            List<Game> games = gameProvider.findGamesByRoundID(round.getID());
+            result.render("waiting", 0);
+            result.render("games", games);
 
-        result.render("games", games);
-        result.render("user", username);
+            return result;
+        }
+
+        result.render("waiting", 1);
+        result.render("players", players);
         return result;
     }
 
@@ -148,6 +189,7 @@ public class GameController {
     {
         Result result = Results.html();
         String temp = context.getParameter("user");
+        result.render("user", temp);
         Round round = activeGamesService.getHostedRound(temp);
         if(round == null) {
             String winner = "NA";
@@ -175,6 +217,7 @@ public class GameController {
         Result result = Results.html();
 
         int roundID = Integer.parseInt(context.getParameter("roundID"));
+        result.render("roundID", roundID);
         Round round;
         try {
             round = roundProvider.findRoundByID(roundID).get();

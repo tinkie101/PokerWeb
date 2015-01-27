@@ -1,37 +1,6 @@
-<#import "../layout/defaultLayout.ftl.html" as layout/>
-<@layout.myLayout "New Multiplayer Page">
-
-<script>
-    function update()
-    {
-
-            $(document).ready(function(){
-            if(document.getElementById('header') != null)
-            {
-                        $.ajax({
-                                url: "/activeJoinGames",
-                                type: "POST",
-                                data: { roundID : ${roundID} }
-                            })
-                            .done(function( data ) {
-                                $('#joinDiv').html( data );
-
-                                if(document.getElementById('header') != null)
-                                {
-                                    update();
-                                }
-                            });
-            }
-            });
-    }
-
-    update();
-</script>
-
-<div id="joinDiv">
 <#if waiting == 1>
     <div class="selectDiv" align="center">
-        <h1 id="header">Waiting for host to start game.</h1>
+        <h1>Waiting for host to start game.</h1>
         <table style="background-color: rgba(10, 10, 20, 0.3); margin:10px;">
 
             <th style="background-color: rgba(10, 10, 25, 0.3);">
@@ -73,6 +42,3 @@
         </table>
     </div>
 </#if>
-</div>
-
-</@layout.myLayout>
