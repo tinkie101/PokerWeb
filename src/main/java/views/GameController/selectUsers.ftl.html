@@ -1,6 +1,27 @@
 <#import "../layout/defaultLayout.ftl.html" as layout/>
 <@layout.myLayout "Select USers Page">
 
+<script>
+    $(document).on('input', '#numPlayers',  function() {
+        value = $('#numPlayers').val();
+
+        for(i = 1; i <= 6; ++i)
+        {
+            temp = "user" + i;
+
+            if(i <= value)
+            {
+                $("select[name="+temp+"]").show();
+            }
+            else
+            {
+                $("select[name="+temp+"]").hide();
+            }
+        }
+
+    });
+</script>
+
 <div class="selectDiv">
     <form class="navbar-form form-horizontal" align="center" method="post" action="/game">
         <h1>Select Users:</h1>
@@ -39,8 +60,10 @@
             </#list>
         </select>
 
-        <input hidden type="number" name="numPlayers" min="1" max="6" value="6">
-        <input hidden type="number" name="gameNum" value="-1">
+        <div style="margin:15px;">
+            <label for="numPlayers" class="label" style="font-size:20px;">Number of Players: </label>
+            <input type="number" id="numPlayers" name="numPlayers" min="2" max="6" value="6"/>
+        </div>
 
         <div allign="center" style="margin-top:50px;">
             <input id="play" style="min-width:100px;" class="btn btn-success" type="submit" value="Play!">

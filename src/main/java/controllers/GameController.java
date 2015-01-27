@@ -42,14 +42,22 @@ public class GameController {
     public Result game(Context context) {
         Result result = Results.html();
 
-        int roundID = Integer.parseInt(context.getParameter("roundID"));
-
         Round round;
         String winner = "NA";
         int winningScore = -1;
         int winnerNum = -1;
-
-        round = roundProvider.findRoundByID(roundID).get();
+        int roundID = -1;
+        try {
+            roundID = Integer.parseInt(context.getParameter("roundID"));
+            round = roundProvider.findRoundByID(roundID).get();
+        }
+        catch(Exception e)
+        {
+            //Round does not exist, so it is a single player game
+            round = new Round(new Date(), winner, winnerNum);
+            roundProvider.persist(round);
+            roundID = round.getID();
+        }
 
         if(!round.getWinner().equals("NA"))
             return Results.redirect(router.getReverseRoute(GameController.class, "selectGametype"));
@@ -183,7 +191,6 @@ public Result activeGames(Context context) {
             }
         }
 
-        System.out.println("exit");
         List<String> players = activeGamesService.getGameUsernames(round);
 
         if (players.size() == 0) {
