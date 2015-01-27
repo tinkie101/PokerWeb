@@ -13,19 +13,27 @@ import java.util.List;
 public class ActiveGame {
     private Round round;
     private List<User> users;
+    private Date lastUpdate;
 
     public ActiveGame(Round round) {
         this.round = round;
         users = new LinkedList<>();
+        lastUpdate = new Date();
     }
 
     public void addUser(User user) {
         users.add(user);
+        lastUpdate = new Date();
     }
 
     public Round getRound()
     {
         return round;
+    }
+
+    public Date getDate()
+    {
+        return lastUpdate;
     }
 
 

@@ -4,25 +4,21 @@
 <script>
     function update()
     {
-
-            $(document).ready(function(){
-            if(document.getElementById('header') != null)
-            {
-                        $.ajax({
-                                url: "/activeJoinGames",
-                                type: "POST",
-                                data: { roundID : ${roundID} }
-                            })
-                            .done(function( data ) {
-                                $('#joinDiv').html( data );
-
-                                if(document.getElementById('header') != null)
-                                {
-                                    update();
-                                }
-                            });
-            }
-            });
+        $(document).ready(function(){
+        if(document.getElementById("header") == null)
+            return;
+                $.ajax({
+                        url: "/activeJoinGames",
+                        type: "POST",
+                        data: { roundID : ${roundID} }
+                    })
+                    .done(function( data ) {
+                        $('#joinDiv').html( data );
+                        if(data.split("selectDiv").length < 2)
+                            return;
+                        update();
+                    });
+        });
     }
 
     update();

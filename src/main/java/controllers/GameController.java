@@ -43,7 +43,6 @@ public class GameController {
         Result result = Results.html();
 
         int roundID = Integer.parseInt(context.getParameter("roundID"));
-        activeGamesService.removeActiveGame(roundID);
 
         Round round;
         String winner = "NA";
@@ -95,6 +94,7 @@ public class GameController {
         result.render("cards", cards);
         result.render("evaluate", evaluate);
 
+        activeGamesService.removeActiveGame(roundID);
         return result;
     }
 
@@ -154,22 +154,37 @@ public Result activeGames(Context context) {
             return Results.redirect(router.getReverseRoute(GameController.class, "selectGametype"));
         }
 
-        Date oldDate = activeGamesService.getDate();
-        Date newDate = activeGamesService.getDate();
+        List<ActiveGame> activeGames = activeGamesService.getActiveGames();
 
-        List<String> players = activeGamesService.getGameUsernames(round);
+        int myGamePosition = -1;
 
-        while(oldDate.compareTo(newDate) == 0 && players.size() != 0) {
-            try {
-                Thread.sleep(100);
-                newDate = activeGamesService.getDate();
-                players = activeGamesService.getGameUsernames(round);
+        for(int i = 0; i < activeGames.size(); i++)
+        {
+            if(activeGames.get(i).getRound().getID() == round.getID())
+                myGamePosition = i;
+        }
 
-            } catch (Exception e) {
+        if(myGamePosition != -1) {
 
+            ActiveGame oldMyGame = activeGamesService.getGameAt(myGamePosition);
+            ActiveGame newMyGame = activeGamesService.getGameAt(myGamePosition);
+
+            Date oldDate = oldMyGame.getDate();
+            Date newDate = newMyGame.getDate();
+
+            while (oldDate.compareTo(newDate) == 0 && oldMyGame == newMyGame) {
+                try {
+                    Thread.sleep(100);
+                    newMyGame = activeGamesService.getGameAt(myGamePosition);
+                    newDate = newMyGame.getDate();
+                } catch (Exception e) {
+                    break;
+                }
             }
         }
+
         System.out.println("exit");
+        List<String> players = activeGamesService.getGameUsernames(round);
 
         if (players.size() == 0) {
             List<Game> games = gameProviders.findGamesByRoundID(round.getID());

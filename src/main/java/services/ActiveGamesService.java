@@ -67,6 +67,11 @@ public class ActiveGamesService {
         return result;
     }
 
+    public ActiveGame getGameAt(int position)
+    {
+        return activeGames.get(position);
+    }
+
     public Round getHostedRound(String username)
     {
         for(ActiveGame game: activeGames)
