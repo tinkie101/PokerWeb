@@ -36,7 +36,7 @@ public class ApplicationController {
     Router router;
 
     @Inject
-    GameProvider gameProvider;
+    GameProviders gameProviders;
 
     @Inject
     RoundProvider roundProvider;
@@ -75,7 +75,7 @@ public class ApplicationController {
 
         for(Round round: rounds)
         {
-            games.add(gameProvider.findGamesByRoundID(round.getID()));
+            games.add(gameProviders.findGamesByRoundID(round.getID()));
         }
 
         result.render("games", games);

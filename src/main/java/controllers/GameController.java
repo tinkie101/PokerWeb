@@ -33,7 +33,7 @@ public class GameController {
     private RoundProvider roundProvider;
 
     @Inject
-    private GameProvider gameProvider;
+    private GameProviders gameProviders;
 
     @Inject
     Router router;
@@ -83,7 +83,7 @@ public class GameController {
             }
 
             Game game = new Game(hands[h].toString(), evaluateString, user, round);
-            gameProvider.persist(game);
+            gameProviders.persist(game);
         }
 
         round.setWinner(winner);
@@ -172,7 +172,7 @@ public Result activeGames(Context context) {
         System.out.println("exit");
 
         if (players.size() == 0) {
-            List<Game> games = gameProvider.findGamesByRoundID(round.getID());
+            List<Game> games = gameProviders.findGamesByRoundID(round.getID());
             result.render("waiting", 0);
             result.render("games", games);
 
@@ -255,7 +255,7 @@ public Result activeGames(Context context) {
 
         if(!round.getWinner().equals("NA"))
         {
-            List<Game> games = gameProvider.findGamesByRoundID(round.getID());
+            List<Game> games = gameProviders.findGamesByRoundID(round.getID());
             result.render("waiting", 0);
             result.render("games", games);
 
@@ -296,7 +296,7 @@ public Result activeGames(Context context) {
         Result result = Results.html();
 
         String username = context.getSession().get("username");
-        List<Game> games = gameProvider.findGamesByUsername(username);
+        List<Game> games = gameProviders.findGamesByUsername(username);
         List<SingleHistory> histories = new LinkedList<>();
 
         for(Game game : games)
