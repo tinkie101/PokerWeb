@@ -184,6 +184,33 @@ public Result activeGames(Context context) {
         return result;
     }
 
+    public Result newMultiplayerRefresh(Context context)
+    {
+        Result result = Results.html();
+
+        String temp = context.getParameter("user");
+        result.render("user", temp);
+        Round round = activeGamesService.getHostedRound(temp);
+
+        List<String> oldPlayers= activeGamesService.getGameUsernames(round);
+        List<String> newPlayers= activeGamesService.getGameUsernames(round);
+
+        while(oldPlayers.size() == newPlayers.size())
+        {
+            try {
+                Thread.sleep(100);
+                newPlayers= activeGamesService.getGameUsernames(round);
+            } catch (Exception e) {
+
+            }
+        }
+
+        result.render("roundID", round.getID());
+        result.render("players", newPlayers);
+
+        return result;
+    }
+
     @FilterWith(SecureFilter.class)
     public Result newMultiplayerGame(Context context)
     {

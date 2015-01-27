@@ -1,6 +1,26 @@
 <#import "../layout/defaultLayout.ftl.html" as layout/>
 <@layout.myLayout "New Multiplayer Page">
 
+<script>
+    function update()
+    {
+            $(document).ready(function(){
+                $.ajax({
+                        url: "/newMultiplayerRefresh",
+                        type: "POST",
+                        data: { user : "${user}" }
+                    })
+                    .done(function( data ) {
+                        $('#gameDetails').html( data );
+
+                        update();
+                    });
+            });
+    }
+
+    update();
+</script>
+
 <div id="gameDetails" class="selectDiv" align="center">
     <h2>Game ${roundID}</h2>
     <form class="navbar-form form-horizontal" align="center" method="post" action="/game">
